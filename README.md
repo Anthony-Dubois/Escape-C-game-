@@ -1,1 +1,4 @@
-# Escape-C-game-
+# Escape
+C++ game with sfml 
+
+Developer : Anthony Dubois

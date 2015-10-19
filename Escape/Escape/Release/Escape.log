@@ -1,17 +1,38 @@
-﻿La génération a démarré 15/10/2015 18:07:48.
+﻿La génération a démarré 18/10/2015 17:21:22.
      1>Projet "C:\Users\Anthony\Documents\Visual Studio 2015\Projects\Escape\Escape\Escape.vcxproj" sur le nœud 2 (Build cible(s)).
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /I"C:\SFML-2.3.2\include" /Zi /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D _MBCS /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Release\\" /Fd"Release\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt Jeu.cpp
          Jeu.cpp
-     1>Jeu.cpp(84): warning C4244: 'argument' : conversion de 'int' en 'float', perte possible de données
-     1>Jeu.cpp(88): warning C4244: 'argument' : conversion de 'int' en 'float', perte possible de données
-     1>Jeu.cpp(92): warning C4244: 'argument' : conversion de 'int' en 'float', perte possible de données
-     1>Jeu.cpp(96): warning C4244: 'argument' : conversion de 'int' en 'float', perte possible de données
-     1>Jeu.cpp(119): warning C4018: '>=' : incompatibilité signed/unsigned
+     1>c:\users\anthony\documents\visual studio 2015\projects\escape\escape\TileMap.cpp(32): warning C4244: 'argument' : conversion de 'unsigned int' en 'float', perte possible de données
+     1>c:\users\anthony\documents\visual studio 2015\projects\escape\escape\TileMap.cpp(33): warning C4244: 'argument' : conversion de 'unsigned int' en 'float', perte possible de données
+     1>c:\users\anthony\documents\visual studio 2015\projects\escape\escape\TileMap.cpp(34): warning C4244: 'argument' : conversion de 'unsigned int' en 'float', perte possible de données
+     1>c:\users\anthony\documents\visual studio 2015\projects\escape\escape\TileMap.cpp(35): warning C4244: 'argument' : conversion de 'unsigned int' en 'float', perte possible de données
+     1>c:\users\anthony\documents\visual studio 2015\projects\escape\escape\TileMap.cpp(38): warning C4244: 'argument' : conversion de 'unsigned int' en 'float', perte possible de données
+     1>c:\users\anthony\documents\visual studio 2015\projects\escape\escape\TileMap.cpp(39): warning C4244: 'argument' : conversion de 'unsigned int' en 'float', perte possible de données
+     1>c:\users\anthony\documents\visual studio 2015\projects\escape\escape\TileMap.cpp(40): warning C4244: 'argument' : conversion de 'unsigned int' en 'float', perte possible de données
+     1>c:\users\anthony\documents\visual studio 2015\projects\escape\escape\TileMap.cpp(41): warning C4244: 'argument' : conversion de 'unsigned int' en 'float', perte possible de données
+     1>Jeu.cpp(32): warning C4005: 'RAND_MAX' : redéfinition de macro
+         C:\Program Files (x86)\Windows Kits\10\Include\10.0.10150.0\ucrt\stdlib.h(339): note: voir la définition précédente de 'RAND_MAX'
+     1>Jeu.cpp(113): warning C4244: 'argument' : conversion de 'float' en 'int', perte possible de données
+     1>Jeu.cpp(114): warning C4244: 'argument' : conversion de 'float' en 'int', perte possible de données
+     1>Jeu.cpp(115): warning C4244: 'argument' : conversion de 'float' en 'int', perte possible de données
+     1>Jeu.cpp(155): warning C4244: 'argument' : conversion de 'int' en 'float', perte possible de données
+     1>Jeu.cpp(159): warning C4244: 'argument' : conversion de 'int' en 'float', perte possible de données
+     1>Jeu.cpp(163): warning C4244: 'argument' : conversion de 'int' en 'float', perte possible de données
+     1>Jeu.cpp(167): warning C4244: 'argument' : conversion de 'int' en 'float', perte possible de données
+     1>Jeu.cpp(175): warning C4244: 'argument' : conversion de 'int' en 'float', perte possible de données
+     1>Jeu.cpp(177): warning C4244: 'argument' : conversion de 'int' en 'float', perte possible de données
+     1>Jeu.cpp(199): warning C4018: '>=' : incompatibilité signed/unsigned
+     1>Jeu.cpp(211): warning C4244: 'argument' : conversion de 'int' en 'float', perte possible de données
+     1>Jeu.cpp(212): warning C4244: 'argument' : conversion de 'int' en 'float', perte possible de données
+     1>Jeu.cpp(220): warning C4244: 'argument' : conversion de 'int' en 'float', perte possible de données
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Anthony\Documents\Visual Studio 2015\Projects\Escape\Release\Escape.exe" /NOLOGO /LIBPATH:"C:\SFML-2.3.2\lib" "sfml-audio.lib" "sfml-network.lib" "sfml-graphics.lib" "sfml-window.lib" "sfml-system.lib" "sfml-main.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"C:\Users\Anthony\Documents\Visual Studio 2015\Projects\Escape\Release\Escape.pdb" /OPT:REF /OPT:ICF /LTCG:incremental /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Anthony\Documents\Visual Studio 2015\Projects\Escape\Release\Escape.lib" /MACHINE:X86 /SAFESEH Release\Jeu.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Anthony\Documents\Visual Studio 2015\Projects\Escape\Release\Escape.exe" /NOLOGO /LIBPATH:"C:\SFML-2.3.2\lib" "sfml-audio.lib" "sfml-network.lib" "sfml-graphics.lib" "sfml-window.lib" "sfml-system.lib" "sfml-main.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"C:\Users\Anthony\Documents\Visual Studio 2015\Projects\Escape\Release\Escape.pdb" /OPT:REF /OPT:ICF /LTCG:incremental /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Anthony\Documents\Visual Studio 2015\Projects\Escape\Release\Escape.lib" /MACHINE:X86 /SAFESEH Release\Hero.obj
+         Release\Jeu.obj
+         Release\Particules.obj
+         Release\TileMap.obj
          Génération de code en cours
-         2 of 90 functions ( 2.2%) were compiled, the rest were copied from previous compilation.
+         1 of 173 functions ( 0.6%) were compiled, the rest were copied from previous compilation.
            0 functions were new in current compilation
            0 functions had inline decision re-evaluated but remain unchanged
          Fin de la génération du code
@@ -20,4 +41,4 @@
 
 La génération a réussi.
 
-Temps écoulé 00:00:01.18
+Temps écoulé 00:00:01.74

@@ -29,12 +29,12 @@ enum Dir { Down, Left, Right, Up };
 sf::Vector2i anim(1, Down);
 int blockSize = 32;
 bool updateFPS = true;
-#define RAND_MAX = 1;
-bool pause = true;
+bool menu = true;
 
 //variables de vue
 sf::View view;
 #pragma endregion variables
+sf::Font font;
 
  
 #pragma region prototypes
@@ -59,7 +59,6 @@ int main() {
 	hero.setSmooth(true);
 	sprite_hero.setTexture(hero);
 
-
 	int level[3200];
 	for (int i = 0; i < 3200; i++) {
 		int nb = std::rand() % 100;
@@ -76,12 +75,63 @@ int main() {
 		else
 			level[i] = 3;
 	}
-
-
 	// on crée la tilemap avec le niveau précédemment défini
 	TileMap map;
-	if (!map.load("tileset.gif", sf::Vector2u(32, 32), level, 80, 40))
+	if (!map.load("tileset.gif", sf::Vector2u(64, 64), level, 80, 40))
 		return -1;
+
+
+
+	/*Menu de début*/
+	if (!font.loadFromFile("Northwood High.ttf"))
+		std::cout << "Erreur de chargement du menu" << std::endl;
+	sf::Text text;
+	text.setFont(font);
+	text.setString("Escape !");
+	text.setCharacterSize(120);
+	text.setColor(sf::Color::Red);
+	text.setPosition(sf::Vector2f(xScreen/2 -400, yScreen / 6));
+
+	if (!font.loadFromFile("DK_Crayon_Crumble.ttf"))
+		std::cout << "Erreur de chargement du menu" << std::endl;
+	sf::Text text2;
+	text2.setFont(font);
+	text2.setString("Echape toi de ce niveau !");
+	text2.setCharacterSize(50);
+	text2.setColor(sf::Color::White);
+	text2.setPosition(sf::Vector2f(xScreen / 2 - 400, yScreen / 5 + 150));
+
+	sf::Text text3;
+	text3.setFont(font);
+	text3.setString("Attention le sol n'en fait qu'à sa tête !");
+	text3.setCharacterSize(50);
+	text3.setColor(sf::Color::White);
+	text3.setPosition(sf::Vector2f(xScreen / 2 - 400, yScreen / 5 +210));
+	
+	sf::Text text4;
+	text4.setFont(font);
+	text4.setString("Utilise les flèches pour te déplacer et espace pour attaquer.");
+	text4.setCharacterSize(50);
+	text4.setColor(sf::Color::White);
+	text4.setPosition(sf::Vector2f(xScreen / 2 - 400, yScreen / 5+270));
+
+	sf::Text text5;
+	text5.setFont(font);
+	text5.setString("appuie sur entrée pour commencer !");
+	text5.setCharacterSize(50);
+	text5.setColor(sf::Color::Red);
+	text5.setPosition(sf::Vector2f(xScreen / 2 - 400, yScreen / 5+360));
+		
+	/*
+	if (!font.loadFromFile("DK_Crayon_Crumble.ttf"))
+		std::cout << "Erreur de chargement du menu" << std::endl;
+	sf::Text score;
+	score.setFont(font);
+	score.setString("Score :");
+	score.setCharacterSize(50);
+	score.setColor(sf::Color::Red);
+	score.setPosition(sf::Vector2f(xScreen / 8 - 200, yScreen -80 ));
+	*/
 
 
 
@@ -105,7 +155,6 @@ int main() {
 		souris();
 		animation();
 		vue();
-
 		
 
 
@@ -138,8 +187,19 @@ int main() {
 		
 		window.clear();
 		window.draw(map);
-		window.draw(particles);
+		if (!menu) {
+			window.draw(particles);
+		}
 		window.draw(sprite_hero);
+		if (menu) {
+			window.draw(text);
+			window.draw(text2);
+			window.draw(text3);
+			window.draw(text4);
+			window.draw(text5);
+		}
+		
+
 		window.display();
 		
 		
@@ -151,7 +211,7 @@ int main() {
 
 //gestion du clavier
 void clavier() {
-	if (!pause) {
+	if (!menu) {
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
 			anim.y = Up;
 			sprite_hero.move(0, -speed);
@@ -173,10 +233,14 @@ void clavier() {
 			sprite_hero.setPosition(sf::Vector2f(0, sprite_hero.getPosition().y));
 		if (sprite_hero.getPosition().y <= 0)
 			sprite_hero.setPosition(sf::Vector2f(sprite_hero.getPosition().x, 0));
-		if (sprite_hero.getPosition().x >= 79 * blockSize)
-			sprite_hero.setPosition(sf::Vector2f(79 * blockSize, sprite_hero.getPosition().y));
-		if (sprite_hero.getPosition().y >= 39 * blockSize)
-			sprite_hero.setPosition(sf::Vector2f(sprite_hero.getPosition().x, 39 * blockSize));
+		if (sprite_hero.getPosition().x >= 79 * blockSize*2+32)
+			sprite_hero.setPosition(sf::Vector2f(79 * blockSize*2+32, sprite_hero.getPosition().y));
+		if (sprite_hero.getPosition().y >= 39 * blockSize*2+32)
+			sprite_hero.setPosition(sf::Vector2f(sprite_hero.getPosition().x, 39 * blockSize*2+32));
+	}
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) {
+		menu = false;
 	}
 }
 

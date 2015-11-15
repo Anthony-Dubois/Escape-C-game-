@@ -1,4 +1,5 @@
 #include <SFML/Graphics.hpp>
+#include <iostream>
 
 class TileMap : public sf::Drawable, public sf::Transformable
 {
@@ -44,10 +45,10 @@ public:
 		return true;
 	}
 
+
 private:
 
-	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const
-	{
+	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const{
 		// on applique la transformation
 		states.transform *= getTransform();
 

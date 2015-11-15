@@ -16,7 +16,7 @@
 #pragma region variables
 //variables d'écran
 int xScreen = GetSystemMetrics(SM_CXFULLSCREEN);
-int yScreen = GetSystemMetrics(SM_CYFULLSCREEN) - 10;
+int yScreen = GetSystemMetrics(SM_CYFULLSCREEN)-10;
 
 //variables de texture
 sf::Texture hero;
@@ -33,15 +33,19 @@ bool menu = true;
 
 //variables de vue
 sf::View view;
-#pragma endregion variables
+
 sf::Font font;
+sf::Font font2;
+#pragma endregion variables
+
 
  
 #pragma region prototypes
-void clavier();
+void clavier(int[]);
 void souris();
 void animation();
 void vue();
+void retournerCase(int[], int[], bool[]);
 #pragma endregion prototypes
 
 int main() {
@@ -49,6 +53,7 @@ int main() {
 	//ouverture de la fenêtre
 	sf::RenderWindow window(sf::VideoMode(xScreen, yScreen), "Escape", sf::Style::Default);
 	window.setPosition(sf::Vector2i(-10, 0));
+	window.setFramerateLimit(60);
 
 	sf::Clock clock;
 	ParticleSystem particles(10000);
@@ -59,29 +64,34 @@ int main() {
 	hero.setSmooth(true);
 	sprite_hero.setTexture(hero);
 
+	//tableau definissant le niveau de départ
 	int level[3200];
 	for (int i = 0; i < 3200; i++) {
-		int nb = std::rand() % 100;
-		std::cout << nb << std::endl;
-		if (nb < 5) {
-			level[i] = 0;
+		int random = rand() % 100;
+		if (random < 30) {
+			level[i] = 9;
 		}
-		else if (nb < 10) {
-			level[i] = 1;
+		else if (random < 60) {
+			level[i] = 10;
 		}
-		else if (nb < 25) {
-			level[i] = 2;
+		else {
+			level[i] = 11;
 		}
-		else
-			level[i] = 3;
+		if ((i == 0) || (i == 3199)) {
+			level[i] = 103;
+		}
+		else if (((i % 6) == 0) && (i != 0)) {
+			level[i] = 169;
+		}
 	}
+	
 	// on crée la tilemap avec le niveau précédemment défini
 	TileMap map;
-	if (!map.load("tileset.gif", sf::Vector2u(64, 64), level, 80, 40))
+	if (!map.load("tileset.gif", sf::Vector2u(32, 32), level, 80, 40))
 		return -1;
 
 
-
+#pragma region menu
 	/*Menu de début*/
 	if (!font.loadFromFile("Northwood High.ttf"))
 		std::cout << "Erreur de chargement du menu" << std::endl;
@@ -92,49 +102,39 @@ int main() {
 	text.setColor(sf::Color::Red);
 	text.setPosition(sf::Vector2f(xScreen/2 -400, yScreen / 6));
 
-	if (!font.loadFromFile("DK_Crayon_Crumble.ttf"))
+	if (!font2.loadFromFile("DK_Crayon_Crumble.ttf"))
 		std::cout << "Erreur de chargement du menu" << std::endl;
 	sf::Text text2;
-	text2.setFont(font);
-	text2.setString("Echape toi de ce niveau !");
+	text2.setFont(font2);
+	text2.setString("Echape toi de ce niveau,");
 	text2.setCharacterSize(50);
 	text2.setColor(sf::Color::White);
 	text2.setPosition(sf::Vector2f(xScreen / 2 - 400, yScreen / 5 + 150));
 
 	sf::Text text3;
-	text3.setFont(font);
-	text3.setString("Attention le sol n'en fait qu'à sa tête !");
+	text3.setFont(font2);
+	text3.setString("Mais attention où tu met les pieds !");
 	text3.setCharacterSize(50);
 	text3.setColor(sf::Color::White);
 	text3.setPosition(sf::Vector2f(xScreen / 2 - 400, yScreen / 5 +210));
 	
 	sf::Text text4;
-	text4.setFont(font);
+	text4.setFont(font2);
 	text4.setString("Utilise les flèches pour te déplacer et espace pour attaquer.");
 	text4.setCharacterSize(50);
 	text4.setColor(sf::Color::White);
 	text4.setPosition(sf::Vector2f(xScreen / 2 - 400, yScreen / 5+270));
 
 	sf::Text text5;
-	text5.setFont(font);
+	text5.setFont(font2);
 	text5.setString("appuie sur entrée pour commencer !");
 	text5.setCharacterSize(50);
 	text5.setColor(sf::Color::Red);
 	text5.setPosition(sf::Vector2f(xScreen / 2 - 400, yScreen / 5+360));
-		
-	/*
-	if (!font.loadFromFile("DK_Crayon_Crumble.ttf"))
-		std::cout << "Erreur de chargement du menu" << std::endl;
-	sf::Text score;
-	score.setFont(font);
-	score.setString("Score :");
-	score.setCharacterSize(50);
-	score.setColor(sf::Color::Red);
-	score.setPosition(sf::Vector2f(xScreen / 8 - 200, yScreen -80 ));
-	*/
+#pragma endregion menu
 
 
-
+#pragma region boucle de jeu
 	//Tant que la fenêtre est ouverte
 	while (window.isOpen()){
 		sf::Event event;
@@ -150,13 +150,24 @@ int main() {
 				updateFPS = false;
 		}
 
+
+		
 		/*Gestion des évènements*/
-		clavier();
+		clavier(level);
 		souris();
 		animation();
 		vue();
 		
 
+
+
+		
+
+
+
+
+		
+		
 
 
 		/*Gestion des particules*/
@@ -202,41 +213,62 @@ int main() {
 
 		window.display();
 		
-		
 	}
+#pragma endregion boucle de jeu
 
 	return 0;
 }
 
 
 //gestion du clavier
-void clavier() {
+void clavier(int* l) {
 	if (!menu) {
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) { 
 			anim.y = Up;
-			sprite_hero.move(0, -speed);
+			int xx = sprite_hero.getPosition().x+20 / blockSize;
+			int yy = (sprite_hero.getPosition().y+23) / blockSize;
+			int c = xx + 80 * yy;
+			if (l[c] != 169)
+				sprite_hero.move(0, -speed);
+			std::cout << l[c] << std::endl;
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
 			anim.y = Down;
-			sprite_hero.move(0, speed);
+			int xx = (sprite_hero.getPosition().x+18) / blockSize;
+			int yy = (sprite_hero.getPosition().y + 33) / blockSize;
+			int c = xx + 80 * yy;
+			if ((l[c]) != 169)
+				sprite_hero.move(0, speed);
+			std::cout << l[c] << std::endl;
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
 			anim.y = Left;
-			sprite_hero.move(-speed, 0);
+			int xx = (sprite_hero.getPosition().x) / blockSize;
+			int yy = (sprite_hero.getPosition().y + 20) / blockSize;
+			int c = xx + 80 * yy;
+			if ((l[c]) != 169)
+				sprite_hero.move(-speed, 0);
+			std::cout << l[c] << std::endl;
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
 			anim.y = Right;
-			sprite_hero.move(speed, 0);
+			int xx = (sprite_hero.getPosition().x+30) / blockSize;
+			int yy = (sprite_hero.getPosition().y + 20) / blockSize;
+			int c = xx + 80 * yy;
+			if ((l[c]) != 169)
+				sprite_hero.move(speed, 0);
+			std::cout << l[c] << std::endl;
 		}
 
 		if (sprite_hero.getPosition().x <= 0)
 			sprite_hero.setPosition(sf::Vector2f(0, sprite_hero.getPosition().y));
 		if (sprite_hero.getPosition().y <= 0)
 			sprite_hero.setPosition(sf::Vector2f(sprite_hero.getPosition().x, 0));
-		if (sprite_hero.getPosition().x >= 79 * blockSize*2+32)
-			sprite_hero.setPosition(sf::Vector2f(79 * blockSize*2+32, sprite_hero.getPosition().y));
-		if (sprite_hero.getPosition().y >= 39 * blockSize*2+32)
-			sprite_hero.setPosition(sf::Vector2f(sprite_hero.getPosition().x, 39 * blockSize*2+32));
+		if (sprite_hero.getPosition().x >= 79 * blockSize)
+			sprite_hero.setPosition(sf::Vector2f(79 * blockSize, sprite_hero.getPosition().y));
+		if (sprite_hero.getPosition().y >= 39 * blockSize)
+			sprite_hero.setPosition(sf::Vector2f(sprite_hero.getPosition().x, 39 * blockSize));
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) {
